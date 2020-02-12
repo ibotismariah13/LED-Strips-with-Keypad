@@ -1,6 +1,6 @@
 #define FASTLED_INTERNAL
-#include <FastLED.h> 
-#include <Keypad.h> 
+#include <FastLED.h>
+#include <Keypad.h>
 #define NUM_LEDS 55 //number of LEDs
 # define NUM_WHITE 3
 # define LED_PIN 10
@@ -28,16 +28,16 @@ const long interval = 50;
 char function = '1';
 CRGB color = CRGB::Blue;
 char keys[rows][cols] = {
-  {'1','2','3','A'},
-  {'4','5','6','B'},
-  {'7','8','9','C'},
-  {'*','0','#','D'}
+  {'1', '2', '3', 'A'},
+  {'4', '5', '6', 'B'},
+  {'7', '8', '9', 'C'},
+  {'*', '0', '#', 'D'}
 };
-byte rowPins[rows] = {2,3,4,5}; //connect to the row pinouts of the keypad
-byte colPins[cols] = {6,7,8,9}; //connect to the column pinouts of the keypad
+byte rowPins[rows] = {2, 3, 4, 5}; //connect to the row pinouts of the keypad
+byte colPins[cols] = {6, 7, 8, 9}; //connect to the column pinouts of the keypad
 Keypad key2 = Keypad(makeKeymap(keys), rowPins, colPins, rows, cols);
 
-//sets up everything 
+//sets up everything
 void setup() {
   FastLED.addLeds < WS2812, LED_PIN, GRB > (leds, NUM_LEDS);
   Serial.begin(9600);
@@ -58,27 +58,27 @@ void loop() {
   leds[3] = CRGB::Black;
   leds[4] = CRGB::Black;
   if (function == '1') {
-    function1(); //does nothing
+    colorOn(); //does nothing
   } else if (function == '2') {
-    function2(); //white dashing line across standard colors
+    whiteLine(); //white dashing line across standard colors
   } else if (function == '3') {
-    function3(); //party function 
+    party(); //party function
   } else if (function == '4') {
-    function4(); //Snake
+    snake(); //Snake
   } else if (function == '5') {
-    function5(); //festival lights
+    festivalLights(); //festival lights
   } else if (function == '6') {
-    //function6(); 
+    //function6();
     meteorRain(10, 64, true); // meteor rain from https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/
   } else if (function == '7') {
-    function7(); //random sparkles with input color
+    sparkles(); //random sparkles with input color
   } else if (function == '8') {
-    function8(); // rainbow changing colors from https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/
+    rainbow(); // rainbow changing colors from https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/
   } else if (function == '9') {
-    function9(); // rainbow changing colors with sparkles
+    rainbowSparkles(); // rainbow changing colors with sparkles
   }
 }
-void function1() {
+void colorOn() {
   amount = 1;
   for (int i = 4; i < NUM_LEDS; i++) {
     leds[i] = color;
@@ -88,7 +88,7 @@ void function1() {
 
   }
 }
-void function2() {
+void whiteLine() {
   if (function == '2') {
     for (int j = 49; j < NUM_LEDS - 2; j++) {
 
@@ -159,7 +159,7 @@ void function2() {
   }
 }
 
-void function3() {
+void party() {
   for (int i = 4; i < NUM_LEDS; i++) {
     leds[i] = CRGB::Blue;
     FastLED.show();
@@ -188,7 +188,7 @@ void function3() {
 
 }
 
-void function4() {
+void snake() {
   if (function != '4') goto stupid;
   for (int i = 4; i < NUM_LEDS; i++) {
     leds[i] = CRGB::Black;
@@ -202,7 +202,7 @@ void function4() {
     FastLED.show();
     delay4(delayNum, '4');
   }
-  stupid: String stupid = "Bennett";
+stupid: String stupid = "Bennett";
 }
 void delay4(int time, char fun) {
   unsigned long t = millis();
@@ -218,16 +218,16 @@ void delay4(int time, char fun) {
     t++;
   }
   Serial.println(t);
-  nothing: String no = "no";
+nothing: String no = "no";
 }
-void function5() {
+void festivalLights() {
   int Position = 0;
   for (int i = 0; i < 6; i++) {
     Position++; // = 0; //Position + Rate;
     for (int i = 0; i < NUM_LEDS; i++) {
       leds[i] = CRGB(((sin(i + Position) * 127 + 128) / 255) * r,
-        ((sin(i + Position) * 127 + 128) / 255) * g,
-        ((sin(i + Position) * 127 + 128) / 255) * b);
+                     ((sin(i + Position) * 127 + 128) / 255) * g,
+                     ((sin(i + Position) * 127 + 128) / 255) * b);
     }
 
     FastLED.show();
@@ -256,12 +256,12 @@ void meteorRain(byte meteorSize, byte meteorTrailDecay, boolean meteorRandomDeca
 
     FastLED.show();
     myDelay(delayNum);
-    hello: String hello = "hi";
+hello: String hello = "hi";
   }
 }
 
 void fadeToBlack(int ledNo, byte fadeValue) {
-  #ifdef ADAFRUIT_NEOPIXEL_H
+#ifdef ADAFRUIT_NEOPIXEL_H
   // NeoPixel
   uint32_t oldColor;
   uint8_t red, green, blue;
@@ -277,20 +277,20 @@ void fadeToBlack(int ledNo, byte fadeValue) {
   blue = (b <= 10) ? 0 : (int) blue - (blue * fadeValue / 256);
 
   strip.setPixelColor(ledNo, red, green, blue);
-  #endif
-  #ifndef ADAFRUIT_NEOPIXEL_H
+#endif
+#ifndef ADAFRUIT_NEOPIXEL_H
   // FastLED
   leds[ledNo].fadeToBlackBy(fadeValue);
-  #endif
+#endif
 }
-void function7() {
+void sparkles() {
   for (int i = 4; i < NUM_LEDS; i++) {
     leds[i] = CRGB(random(0, r), random(0, g), random(0, b));
   }
   FastLED.show();
   myDelay(delayNum);
 }
-void function8() {
+void rainbow() {
   if (function != '8') goto lol;
   for (int colorStep = 0; colorStep < 256; colorStep++) {
     int r = 255 - colorStep; // Redness starts at zero and goes up to full
@@ -327,11 +327,11 @@ void function8() {
     FastLED.show();
     myDelay(delayNum);
   }
-  lol: String lol = "lol";
+lol: String lol = "lol";
 }
 
 // from https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/
-void function9() {
+void rainbowSparkles() {
   if (function != '9') goto lol;
   for (int colorStep = 0; colorStep < 256; colorStep++) {
     int r = 255 - colorStep; // Redness starts at zero and goes up to full
@@ -371,7 +371,7 @@ void function9() {
     FastLED.show();
     myDelay(delayNum);
   }
-  lol: String lol = "lol";
+lol: String lol = "lol";
 }
 void check() {
   Serial.println(key2.getKey());
@@ -394,70 +394,69 @@ void myDelay(int time) {
     t++;
   }
   Serial.println(t);
-  nothing: String no = "no";
+nothing: String no = "no";
 }
 
 //switches patterns and colors
 void keypadEvent(KeypadEvent key) {
   switch (key2.getState()) {
 
-  case PRESSED:
-    delaytf = !delaytf;
-    if (key == '1') {
-      function = '1';
+    case PRESSED:
+      delaytf = !delaytf;
+      if (key == '1') {
+        function = '1';
+        colorOn();
+      } else if (key == '2') {
+        function = '2';
+      } else if (key == '3') {
+        function = '3';
+      } else if (key == '4') {
+        function = '4';
+      } else if (key == '5') {
+        function = '5';
+        Serial.println("WTFDFF");
+      } else if (key == '6') {
+        function = '6';
+      } else if (key == '7') {
+        function = '7';
+      } else if (key == '8') {
+        function = '8';
+      } else if (key == '9') {
+        function = '9';
+      }
+      if (key == 'A') {
+        mode = 'A';
+        Serial.println(mode);
 
-      //function1();
-    } else if (key == '2') {
-      function = '2';
-    } else if (key == '3') {
-      function = '3';
-    } else if (key == '4') {
-      function = '4';
-    } else if (key == '5') {
-      function = '5';
-      Serial.println("WTFDFF");
-    } else if (key == '6') {
-      function = '6';
-    } else if (key == '7') {
-      function = '7';
-    } else if (key == '8') {
-      function = '8';
-    } else if (key == '9') {
-      function = '9';
-    }
-    if (key == 'A') {
-      mode = 'A';
-      Serial.println(mode);
+      } else if (key == 'B') {
+        mode = 'B';
+        Serial.println(mode);
+      } else if (key == 'C') {
+        mode = 'C';
+        Serial.println("sdlfkhdshfshdiof");
+        Serial.println(mode);
+      } else if (key == 'D') {
+        mode = 'D';
+        Serial.println(mode);
+      } else if (key == '#') {
+        isHashtagHold = !isHashtagHold;
+      } else if (key == '*') {
+        isStarHold = !isStarHold;
+        Serial.println("HELLO");
+      } else if (key == '0') {
+        mode = '0';
+      }
+      break;
 
-    } else if (key == 'B') {
-      mode = 'B';
-      Serial.println(mode);
-    } else if (key == 'C') {
-      mode = 'C';
-      Serial.println("sdlfkhdshfshdiof");
-      Serial.println(mode);
-    } else if (key == 'D') {
-      mode = 'D';
-      Serial.println(mode);
-    } else if (key == '#') {
-      isHashtagHold = !isHashtagHold;
-    } else if (key == '*') {
-      isStarHold = !isStarHold;
-      Serial.println("HELLO");
-    } else if (key == '0') {
-      mode = '0';
-    }
-    break;
+    case RELEASED:
 
-  case RELEASED:
-
-    delaytf = !delaytf;
-    if (key == '*') {
-      isStarHold = !isStarHold;
-      Serial.println("HELLO");
-    } else if (key == '#') {
-      isHashtagHold = !isHashtagHold;
-    }
+      delaytf = !delaytf;
+      if (key == '*') {
+        isStarHold = !isStarHold;
+        Serial.println("HELLO");
+      } else if (key == '#') {
+        isHashtagHold = !isHashtagHold;
+      }
   }
 
 }
