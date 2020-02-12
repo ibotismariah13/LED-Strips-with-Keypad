@@ -1,7 +1,7 @@
 #define FASTLED_INTERNAL
 #include <FastLED.h> 
 #include <Keypad.h> 
-#define NUM_LEDS 98 //number of LEDs
+#define NUM_LEDS 55 //number of LEDs
 # define NUM_WHITE 3
 # define LED_PIN 10
 
