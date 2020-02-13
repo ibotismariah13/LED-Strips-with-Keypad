@@ -6,7 +6,7 @@
 # define LED_PIN 10
 
 //initialized variables
-int brightNum = 256;
+int brightNum = 50;
 int r = 0;
 int g = 0;
 int b = 0;
@@ -525,151 +525,152 @@ void brightness() {
     brightNum = decrease(brightNum);
     FastLED.setBrightness(brightNum);
   }
+
+}
+// mariahs functions to be called
+//test if index is odd
+boolean ifOdd(int i){
+  if (i%2 != 0){
+    return true;
+  }
+  return false;
 }
 
-  //test if index is odd
-  boolean ifOdd(int i) {
-    if (i % 2 != 0) {
-      return true;
-    }
-    return false;
+//switches off all leds
+void showProgramCleanUp(long delayTime) {
+  for (int i = 0; i < NUM_LEDS; ++i) {
+    leds[i] = CRGB::Black;
   }
+  FastLED.show();
+  delay(delayTime);
+}
 
-  //switches off all leds
-  void lightsOff(long delayTime) {
+//switches the color of the whole strip
+void colorSwitch(CRGB color1, CRGB color2, long delayTime,int num) {
+  for (int n=num; n>0; n--){
+  
+  for (int i = 0; i < NUM_LEDS; ++i) {
+    leds[i] = color1;
+  }
+  FastLED.show();
+  delay(delayTime);
     for (int i = 0; i < NUM_LEDS; ++i) {
-      leds[i] = CRGB::Black;
+    leds[i] = color2;
+  }
+  FastLED.show();
+  delay(delayTime);
+}
+showProgramCleanUp(50);
+}
+
+  //takes to color lights and makes them follow each other. 
+    //varibles needed: 2 colors, time between flashes, number of lights same color, 
+    void follow( CRGB color1, CRGB color2,  long delayTime){
+   CRGB newPixel = CRGB::Black;
+   for (int i = 0; i < NUM_LEDS; ++i) { 
+    if(ifOdd(i)==true){
+      newPixel = color2;
     }
+    else if (ifOdd(i)== false){
+      newPixel= color1;
+    }
+     for (int j = i; j > 0; --j) {
+      leds[j] = leds[j-1];
+    }
+    leds[0] = newPixel;
     FastLED.show();
     delay(delayTime);
-  }
-
-  //switches the color of the whole strip
-  void colorSwitch(CRGB color1, CRGB color2, long delayTime, int num) {
-    for (int n = num; n > 0; n--) {
-
-      for (int i = 0; i < NUM_LEDS; ++i) {
-        leds[i] = color1;
-      }
-      FastLED.show();
-      delay(delayTime);
-      for (int i = 0; i < NUM_LEDS; ++i) {
-        leds[i] = color2;
-      }
-      FastLED.show();
-      delay(delayTime);
-    }
-    lightsOff(50);
-  }
-
-  //takes to color lights and makes them follow each other.
-  //varibles needed: 2 colors, time between flashes, number of lights same color,
-  void follow( CRGB color1, CRGB color2,  long delayTime) {
-    CRGB newPixel = CRGB::Black;
-    for (int i = 0; i < NUM_LEDS; ++i) {
-      if (ifOdd(i) == true) {
-        newPixel = color2;
-      }
-      else if (ifOdd(i) == false) {
-        newPixel = color1;
-      }
-      for (int j = i; j > 0; --j) {
-        leds[j] = leds[j - 1];
-      }
-      leds[0] = newPixel;
-      FastLED.show();
-      delay(delayTime);
-    }
-
-  }
-
-  //flashes 2 differnt colors in alternating paterns
-  //varibles needed: 2 colors, time between flashes, number of lights same color, overall time
-  void checkerFlashD( CRGB color1, CRGB color2,  long timeDelay) {
-
-    double delayTime = timeDelay;
-    while (delayTime > 50) {
-      for (int i = 0; i < NUM_LEDS; ++i) {
-
-        if (ifOdd(i) == true) {
-          leds[i] = color2;
-        }
-        else if (ifOdd(i) == false) {
-          leds[i] = color1;
-        }
-
-      }
-      FastLED.show();
-      delay(delayTime);
-      lightsOff(10);
-
-      for (int i = 0; i < NUM_LEDS; ++i) {
-
-        if (ifOdd(i) == true) {
-          leds[i] = color1;
-        }
-        else if (ifOdd(i) == false) {
-          leds[i] = color2;
-        }
-
-      }
-      FastLED.show();
-      delay(delayTime);
-      lightsOff(10);
-      delayTime = delayTime * .25;
-    }
-    lightsOff(50);
-  }
-  //alternate flasshing
-  void checkerFlash( CRGB color1, CRGB color2,  long delayTime, int num) {
-
-    for (int n = num; n > 0; --n) {
-      for (int i = 0; i < NUM_LEDS; ++i) {
-
-        if (ifOdd(i) == true) {
-          leds[i] = color2;
-        }
-        else if (ifOdd(i) == false) {
-          leds[i] = color1;
-        }
-
-      }
-      FastLED.show();
-      delay(delayTime);
-      lightsOff(10);
-
-      for (int i = 0; i < NUM_LEDS; ++i) {
-
-        if (ifOdd(i) == true) {
-          leds[i] = color1;
-        }
-        else if (ifOdd(i) == false) {
-          leds[i] = color2;
-        }
-
-      }
-      FastLED.show();
-      delay(delayTime);
-      lightsOff(10);
-
-    }
-    lightsOff(50);
-  }
-
-  // follows then follows back
-  void backwards (  long delayTime) {
-
-    for (int i = NUM_LEDS; i > 0; --i) {
-
-      leds[i] = CRGB::Black;
-      FastLED.show();
-      delay(delayTime);
-    }
-
-  }
+   }
   
-  void coil ( CRGB color1, CRGB color2,  long delayTime) {
-    follow(color1, color2, delayTime);
-    backwards(delayTime);
-    lightsOff(50);
   }
+
+  //flashes 2 differnt colors in alternating paterns 
+    //varibles needed: 2 colors, time between flashes, number of lights same color, overall time
+    void checkerFlashD( CRGB color1, CRGB color2,  long timeDelay){
+ 
+    double delayTime = timeDelay;
+    while (delayTime > 50){
+       for (int i = 0; i < NUM_LEDS; ++i) { 
+       
+    if(ifOdd(i)==true){
+     leds[i] = color2;
+    }
+    else if (ifOdd(i)== false){
+      leds[i]= color1;
+    }
+      
+       }
+    FastLED.show();
+   delay(delayTime);
+   showProgramCleanUp(10);
+   
+     for (int i = 0; i < NUM_LEDS; ++i) { 
+       
+    if(ifOdd(i)==true){
+     leds[i] = color1;
+    }
+    else if (ifOdd(i)== false){
+  leds[i]= color2;
+    }
+     
+       }
+     FastLED.show();
+   delay(delayTime);
+   showProgramCleanUp(10);
+    delayTime = delayTime*.25;
+    }
+    showProgramCleanUp(50);
+    }
+    //alternate flasshing
+   void checkerFlash( CRGB color1, CRGB color2,  long delayTime, int num){
+ 
+ for (int n = num; n>0; --n) {
+       for (int i = 0; i < NUM_LEDS; ++i) { 
+       
+    if(ifOdd(i)==true){
+     leds[i] = color2;
+    }
+    else if (ifOdd(i)== false){
+      leds[i]= color1;
+    }
+      
+       }
+    FastLED.show();
+   delay(delayTime);
+   showProgramCleanUp(10);
+   
+     for (int i = 0; i < NUM_LEDS; ++i) { 
+       
+    if(ifOdd(i)==true){
+     leds[i] = color1;
+    }
+    else if (ifOdd(i)== false){
+  leds[i]= color2;
+    }
+     
+       }
+     FastLED.show();
+   delay(delayTime);
+   showProgramCleanUp(10);
+
+    }
+    showProgramCleanUp(50);
+    }
+    
+// follows then follows back
+void backwards (  long delayTime){
+
+   for (int i = NUM_LEDS; i > 0; --i) { 
+   
+    leds[i] = CRGB::Black;
+    FastLED.show();
+    delay(delayTime);
+   }
+   
+}
+  void coil ( CRGB color1, CRGB color2,  long delayTime){
+  follow(color1, color2, delayTime);
+  backwards(delayTime);
+
+  showProgramCleanUp(50);
+}
