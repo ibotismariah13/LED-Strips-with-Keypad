@@ -48,15 +48,15 @@ void setup() {
 void loop() {
   Serial.println(delayNum);
   delayThing();
-  colorChange();
-  brightness();
+  colorChange(); //change color
+  brightness(); // change brightness
   key = key2.getKey();
   Serial.println(function);
-  leds[0] = CRGB::Black;
+ /* leds[0] = CRGB::Black;
   leds[1] = CRGB::Black;
   leds[2] = CRGB::Black;
   leds[3] = CRGB::Black;
-  leds[4] = CRGB::Black;
+  leds[4] = CRGB::Black; */
   if (function == '1') {
     colorOn(); //does nothing
   } else if (function == '2') {
@@ -68,7 +68,6 @@ void loop() {
   } else if (function == '5') {
     festivalLights(); //festival lights
   } else if (function == '6') {
-    //function6();
     meteorRain(10, 64, true); // meteor rain from https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/
   } else if (function == '7') {
     sparkles(); //random sparkles with input color
@@ -78,9 +77,11 @@ void loop() {
     rainbowSparkles(); // rainbow changing colors with sparkles
   }
 }
+
+//sets strip to current color
 void colorOn() {
   amount = 1;
-  for (int i = 4; i < NUM_LEDS; i++) {
+  for (int i = 1; i < NUM_LEDS; i++) {
     leds[i] = color;
   }
   FastLED.show();
@@ -88,99 +89,100 @@ void colorOn() {
 
   }
 }
+
+
 void whiteLine() {
   if (function == '2') {
-    for (int j = 49; j < NUM_LEDS - 2; j++) {
+    for (int j = 25; j < NUM_LEDS - 2; j++) {
 
       //a++;
       leds[j] = CRGB(255, 255, 255);
-      leds[0] = CRGB::Black;
+     /* leds[0] = CRGB::Black;
       leds[1] = CRGB::Black;
       leds[2] = CRGB::Black;
       leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black;
+      leds[4] = CRGB::Black; */
       FastLED.show();
       leds[NUM_LEDS - j] = CRGB(255, 255, 255);
-      leds[0] = CRGB::Black;
+     /* leds[0] = CRGB::Black;
       leds[1] = CRGB::Black;
       leds[2] = CRGB::Black;
       leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black;
+      leds[4] = CRGB::Black; */
       FastLED.show();
       leds[j + 1] = CRGB(255, 255, 255);
-      leds[0] = CRGB::Black;
+     /* leds[0] = CRGB::Black;
       leds[1] = CRGB::Black;
       leds[2] = CRGB::Black;
       leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black;
+      leds[4] = CRGB::Black; */
       FastLED.show();
       leds[NUM_LEDS - j - 1] = CRGB(255, 255, 255);
-      leds[0] = CRGB::Black;
+      /* leds[0] = CRGB::Black;
       leds[1] = CRGB::Black;
       leds[2] = CRGB::Black;
       leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black;
+      leds[4] = CRGB::Black; */
       FastLED.show();
       leds[j + 2] = CRGB(255, 255, 255);
-      leds[0] = CRGB::Black;
+       /* leds[0] = CRGB::Black;
       leds[1] = CRGB::Black;
       leds[2] = CRGB::Black;
       leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black;
+      leds[4] = CRGB::Black; */
       FastLED.show();
       leds[NUM_LEDS - j - 2] = CRGB(255, 255, 255);
-      leds[0] = CRGB::Black;
+        /* leds[0] = CRGB::Black;
       leds[1] = CRGB::Black;
       leds[2] = CRGB::Black;
       leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black;
+      leds[4] = CRGB::Black; */
       FastLED.show();
-
-      //FastLED.show();
+      
       leds[j] = color;
       leds[NUM_LEDS - j] = color;
-      leds[0] = CRGB::Black;
+       /* leds[0] = CRGB::Black;
       leds[1] = CRGB::Black;
       leds[2] = CRGB::Black;
       leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black;
+      leds[4] = CRGB::Black; */
       Serial.println(j);
       Serial.println(j);
       myDelay(delayNum);
 
-      Serial.println("wtf");
-      //Serial.print("HELLO");
-      //FastLED.show();
+      Serial.println("white line");
+      
     }
-    for (int i = 4; i < NUM_LEDS; i++) {
+    for (int i = 1; i < NUM_LEDS; i++) {
       leds[i] = color;
     }
     FastLED.show();
   }
 }
 
+//color fashing
 void party() {
-  for (int i = 4; i < NUM_LEDS; i++) {
+  for (int i = 1; i < NUM_LEDS; i++) {
     leds[i] = CRGB::Blue;
     FastLED.show();
   }
   myDelay(delayNum);
-  for (int i = 4; i < NUM_LEDS; i++) {
+  for (int i = 1; i < NUM_LEDS; i++) {
     leds[i] = CRGB::Purple;
     FastLED.show();
   }
   myDelay(delayNum);
-  for (int i = 4; i < NUM_LEDS; i++) {
+  for (int i = 1; i < NUM_LEDS; i++) {
     leds[i] = CRGB::Red;
     FastLED.show();
   }
   myDelay(delayNum);
-  for (int i = 4; i < NUM_LEDS; i++) {
+  for (int i = 1; i < NUM_LEDS; i++) {
     leds[i] = CRGB::Yellow;
     FastLED.show();
   }
   myDelay(delayNum);
-  for (int i = 4; i < NUM_LEDS; i++) {
+  for (int i = 1; i < NUM_LEDS; i++) {
     leds[i] = CRGB::Green;
     FastLED.show();
   }
@@ -188,9 +190,10 @@ void party() {
 
 }
 
+//snake of lights
 void snake() {
   if (function != '4') goto stupid;
-  for (int i = 4; i < NUM_LEDS; i++) {
+  for (int i = 1; i < NUM_LEDS; i++) {
     leds[i] = CRGB::Black;
     FastLED.show();
     delay4(delayNum, '4');
@@ -204,6 +207,7 @@ void snake() {
   }
 stupid: String stupid = "Bennett";
 }
+//delays?
 void delay4(int time, char fun) {
   unsigned long t = millis();
   t = 0;
@@ -220,6 +224,7 @@ void delay4(int time, char fun) {
   Serial.println(t);
 nothing: String no = "no";
 }
+
 void festivalLights() {
   int Position = 0;
   for (int i = 0; i < 6; i++) {
@@ -234,6 +239,7 @@ void festivalLights() {
     myDelay(delayNum);
   }
 }
+
 // from https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/
 void meteorRain(byte meteorSize, byte meteorTrailDecay, boolean meteorRandomDecay) {
   FastLED.clear();
@@ -449,7 +455,7 @@ void keypadEvent(KeypadEvent key) {
       break;
 
     case RELEASED:
-
+//false statement
       delaytf = !delaytf;
       if (key == '*') {
         isStarHold = !isStarHold;
