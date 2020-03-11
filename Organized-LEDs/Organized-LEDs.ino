@@ -1,7 +1,7 @@
 #define FASTLED_INTERNAL
 #include <FastLED.h>
 #include <Keypad.h>
-#define NUM_LEDS 55 //number of LEDs
+#define NUM_LEDS 65 //number of LEDs
 # define NUM_WHITE 3
 # define LED_PIN 10
 
@@ -25,7 +25,7 @@ boolean wtf = false;
 char mode;
 unsigned long previousMillis = 0;
 const long interval = 50;
-char function = '1';
+char function = '0';
 CRGB color = CRGB::Blue;
 char keys[rows][cols] = {
   {'1', '2', '3', 'A'},
@@ -52,29 +52,28 @@ void loop() {
   brightness(); // change brightness
   key = key2.getKey();
   Serial.println(function);
- /* leds[0] = CRGB::Black;
-  leds[1] = CRGB::Black;
-  leds[2] = CRGB::Black;
-  leds[3] = CRGB::Black;
-  leds[4] = CRGB::Black; */
-  if (function == '1') {
-    colorOn(); //does nothing
-  } else if (function == '2') {
-    whiteLine(); //white dashing line across standard colors
-  } else if (function == '3') {
-    party(); //party function
-  } else if (function == '4') {
-    snake(); //Snake
-  } else if (function == '5') {
-    festivalLights(); //festival lights
-  } else if (function == '6') {
-    meteorRain(10, 64, true); // meteor rain from https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/
-  } else if (function == '7') {
-    sparkles(); //random sparkles with input color
-  } else if (function == '8') {
-    rainbow(); // rainbow changing colors from https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/
-  } else if (function == '9') {
-    rainbowSparkles(); // rainbow changing colors with sparkles
+  /* leds[0] = CRGB::Black;
+    leds[1] = CRGB::Black;
+    leds[2] = CRGB::Black;
+    leds[3] = CRGB::Black;
+    leds[4] = CRGB::Black; */
+  // aris code
+  if (mode == 'A') {
+    ariLogic();
+
+  } //Mariah Code Red
+  else if (mode == 'C') {
+    mariahLogic(CRGB::Red, CRGB::Black);
+  }
+  //Mariah Code Blue
+  else if (mode == 'B') {
+    mariahLogic(CRGB::Blue, CRGB::Black );
+
+  }
+  //Mariah Code GaCo
+  else if (mode == 'D') {
+    mariahLogic(CRGB::Red, CRGB::Blue );
+
   }
 }
 
@@ -97,61 +96,61 @@ void whiteLine() {
 
       //a++;
       leds[j] = CRGB(255, 255, 255);
-     /* leds[0] = CRGB::Black;
-      leds[1] = CRGB::Black;
-      leds[2] = CRGB::Black;
-      leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black; */
+      /* leds[0] = CRGB::Black;
+        leds[1] = CRGB::Black;
+        leds[2] = CRGB::Black;
+        leds[3] = CRGB::Black;
+        leds[4] = CRGB::Black; */
       FastLED.show();
       leds[NUM_LEDS - j] = CRGB(255, 255, 255);
-     /* leds[0] = CRGB::Black;
-      leds[1] = CRGB::Black;
-      leds[2] = CRGB::Black;
-      leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black; */
+      /* leds[0] = CRGB::Black;
+        leds[1] = CRGB::Black;
+        leds[2] = CRGB::Black;
+        leds[3] = CRGB::Black;
+        leds[4] = CRGB::Black; */
       FastLED.show();
       leds[j + 1] = CRGB(255, 255, 255);
-     /* leds[0] = CRGB::Black;
-      leds[1] = CRGB::Black;
-      leds[2] = CRGB::Black;
-      leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black; */
+      /* leds[0] = CRGB::Black;
+        leds[1] = CRGB::Black;
+        leds[2] = CRGB::Black;
+        leds[3] = CRGB::Black;
+        leds[4] = CRGB::Black; */
       FastLED.show();
       leds[NUM_LEDS - j - 1] = CRGB(255, 255, 255);
       /* leds[0] = CRGB::Black;
-      leds[1] = CRGB::Black;
-      leds[2] = CRGB::Black;
-      leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black; */
+        leds[1] = CRGB::Black;
+        leds[2] = CRGB::Black;
+        leds[3] = CRGB::Black;
+        leds[4] = CRGB::Black; */
       FastLED.show();
       leds[j + 2] = CRGB(255, 255, 255);
-       /* leds[0] = CRGB::Black;
-      leds[1] = CRGB::Black;
-      leds[2] = CRGB::Black;
-      leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black; */
+      /* leds[0] = CRGB::Black;
+        leds[1] = CRGB::Black;
+        leds[2] = CRGB::Black;
+        leds[3] = CRGB::Black;
+        leds[4] = CRGB::Black; */
       FastLED.show();
       leds[NUM_LEDS - j - 2] = CRGB(255, 255, 255);
-        /* leds[0] = CRGB::Black;
-      leds[1] = CRGB::Black;
-      leds[2] = CRGB::Black;
-      leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black; */
+      /* leds[0] = CRGB::Black;
+        leds[1] = CRGB::Black;
+        leds[2] = CRGB::Black;
+        leds[3] = CRGB::Black;
+        leds[4] = CRGB::Black; */
       FastLED.show();
-      
+
       leds[j] = color;
       leds[NUM_LEDS - j] = color;
-       /* leds[0] = CRGB::Black;
-      leds[1] = CRGB::Black;
-      leds[2] = CRGB::Black;
-      leds[3] = CRGB::Black;
-      leds[4] = CRGB::Black; */
+      /* leds[0] = CRGB::Black;
+        leds[1] = CRGB::Black;
+        leds[2] = CRGB::Black;
+        leds[3] = CRGB::Black;
+        leds[4] = CRGB::Black; */
       Serial.println(j);
       Serial.println(j);
       myDelay(delayNum);
 
       Serial.println("white line");
-      
+
     }
     for (int i = 1; i < NUM_LEDS; i++) {
       leds[i] = color;
@@ -439,7 +438,6 @@ void keypadEvent(KeypadEvent key) {
         Serial.println(mode);
       } else if (key == 'C') {
         mode = 'C';
-        Serial.println("sdlfkhdshfshdiof");
         Serial.println(mode);
       } else if (key == 'D') {
         mode = 'D';
@@ -455,7 +453,7 @@ void keypadEvent(KeypadEvent key) {
       break;
 
     case RELEASED:
-//false statement
+      //false statement
       delaytf = !delaytf;
       if (key == '*') {
         isStarHold = !isStarHold;
@@ -533,10 +531,14 @@ void brightness() {
   }
 
 }
-// mariahs functions to be called
+
+
+
+///////////////////////////////////
+// mariahs functions to be calle/////
 //test if index is odd
-boolean ifOdd(int i){
-  if (i%2 != 0){
+boolean ifOdd(int i) {
+  if (i % 2 != 0) {
     return true;
   }
   return false;
@@ -552,131 +554,178 @@ void showProgramCleanUp(long delayTime) {
 }
 
 //switches the color of the whole strip
-void colorSwitch(CRGB color1, CRGB color2, long delayTime,int num) {
-  for (int n=num; n>0; n--){
-  
+void colorSwitch(CRGB color1, CRGB color2, long delayTime) {
+
+
   for (int i = 0; i < NUM_LEDS; ++i) {
     leds[i] = color1;
   }
   FastLED.show();
   delay(delayTime);
-    for (int i = 0; i < NUM_LEDS; ++i) {
+  for (int i = 0; i < NUM_LEDS; ++i) {
     leds[i] = color2;
   }
   FastLED.show();
   delay(delayTime);
-}
-showProgramCleanUp(50);
+
 }
 
-  //takes to color lights and makes them follow each other. 
-    //varibles needed: 2 colors, time between flashes, number of lights same color, 
-    void follow( CRGB color1, CRGB color2,  long delayTime){
-   CRGB newPixel = CRGB::Black;
-   for (int i = 0; i < NUM_LEDS; ++i) { 
-    if(ifOdd(i)==true){
+//takes to color lights and makes them follow each other.
+//varibles needed: 2 colors, time between flashes, number of lights same color,
+void follow( CRGB color1, CRGB color2,  long delayTime) {
+  CRGB newPixel = CRGB::Black;
+  for (int i = 0; i < NUM_LEDS; ++i) {
+    if (ifOdd(i) == true) {
       newPixel = color2;
     }
-    else if (ifOdd(i)== false){
-      newPixel= color1;
+    else if (ifOdd(i) == false) {
+      newPixel = color1;
     }
-     for (int j = i; j > 0; --j) {
-      leds[j] = leds[j-1];
+    for (int j = i; j > 0; --j) {
+      leds[j] = leds[j - 1];
     }
     leds[0] = newPixel;
     FastLED.show();
     delay(delayTime);
-   }
-  
   }
 
-  //flashes 2 differnt colors in alternating paterns 
-    //varibles needed: 2 colors, time between flashes, number of lights same color, overall time
-    void checkerFlashD( CRGB color1, CRGB color2,  long timeDelay){
- 
-    double delayTime = timeDelay;
-    while (delayTime > 50){
-       for (int i = 0; i < NUM_LEDS; ++i) { 
-       
-    if(ifOdd(i)==true){
-     leds[i] = color2;
-    }
-    else if (ifOdd(i)== false){
-      leds[i]= color1;
-    }
-      
-       }
-    FastLED.show();
-   delay(delayTime);
-   showProgramCleanUp(10);
-   
-     for (int i = 0; i < NUM_LEDS; ++i) { 
-       
-    if(ifOdd(i)==true){
-     leds[i] = color1;
-    }
-    else if (ifOdd(i)== false){
-  leds[i]= color2;
-    }
-     
-       }
-     FastLED.show();
-   delay(delayTime);
-   showProgramCleanUp(10);
-    delayTime = delayTime*.25;
-    }
-    showProgramCleanUp(50);
-    }
-    //alternate flasshing
-   void checkerFlash( CRGB color1, CRGB color2,  long delayTime, int num){
- 
- for (int n = num; n>0; --n) {
-       for (int i = 0; i < NUM_LEDS; ++i) { 
-       
-    if(ifOdd(i)==true){
-     leds[i] = color2;
-    }
-    else if (ifOdd(i)== false){
-      leds[i]= color1;
-    }
-      
-       }
-    FastLED.show();
-   delay(delayTime);
-   showProgramCleanUp(10);
-   
-     for (int i = 0; i < NUM_LEDS; ++i) { 
-       
-    if(ifOdd(i)==true){
-     leds[i] = color1;
-    }
-    else if (ifOdd(i)== false){
-  leds[i]= color2;
-    }
-     
-       }
-     FastLED.show();
-   delay(delayTime);
-   showProgramCleanUp(10);
+}
+
+//flashes 2 differnt colors in alternating paterns
+//varibles needed: 2 colors, time between flashes, number of lights same color, overall time
+void checkerFlashD( CRGB color1, CRGB color2,  long timeDelay) {
+
+  double delayTime = timeDelay;
+  while (delayTime > 50) {
+    for (int i = 0; i < NUM_LEDS; ++i) {
+
+      if (ifOdd(i) == true) {
+        leds[i] = color2;
+      }
+      else if (ifOdd(i) == false) {
+        leds[i] = color1;
+      }
 
     }
-    showProgramCleanUp(50);
+    FastLED.show();
+    delay(delayTime);
+    showProgramCleanUp(10);
+
+    for (int i = 0; i < NUM_LEDS; ++i) {
+
+      if (ifOdd(i) == true) {
+        leds[i] = color1;
+      }
+      else if (ifOdd(i) == false) {
+        leds[i] = color2;
+      }
+
     }
-    
+    FastLED.show();
+    delay(delayTime);
+    showProgramCleanUp(10);
+    delayTime = delayTime * .25;
+  }
+  showProgramCleanUp(50);
+}
+//alternate flasshing
+
+
 // follows then follows back
-void backwards (  long delayTime){
+void backwards (  long delayTime) {
 
-   for (int i = NUM_LEDS; i > 0; --i) { 
-   
+  for (int i = NUM_LEDS; i > 0; --i) {
+
     leds[i] = CRGB::Black;
     FastLED.show();
     delay(delayTime);
-   }
-   
+  }
+
 }
-  void coil ( CRGB color1, CRGB color2,  long delayTime){
+void coil ( CRGB color1, CRGB color2,  long delayTime) {
+ 
   follow(color1, color2, delayTime);
   backwards(delayTime);
+  
 
   showProgramCleanUp(50);
+}
+
+  void mariahSparkles() {
+  for (int i = 0; i < NUM_LEDS; i++) {
+    if (mode == 'B'){
+      leds[i] = CRGB(0, 0, random(0,255));
+    } else   if (mode == 'C'){
+      leds[i] = CRGB(random(0, 255), 0, random(0, 255));
+    } else  if (mode == 'D'){
+      leds[i] = CRGB(random(0, 255), 0,0);
+    }
+    
+ 
+  }
+  FastLED.show();
+  myDelay(delayNum);
+}
+ /*void mariahSnake(CRGB::color1){
+  if (function != '4') goto stupid;
+    leds[i] = CRGB::Black;
+    FastLED.show();
+    delay4(delayNum, '4');
+    Serial.println(function);
+  
+  if (function != '4') goto stupid;
+  for (int i = 0; i < NUM_LEDS; i++) {
+    leds[i] = color1;
+    FastLED.show();
+    delay4(delayNum, '4');
+  }
+  stupid: String stupid = "Bennett";
+}*/
+
+///logic functions
+void ariLogic() {
+  if (function == '1') {
+    colorOn(); //does nothing
+  } else if (function == '2') {
+    whiteLine(); //white dashing line across standard colors
+  } else if (function == '3') {
+    party(); //party function
+  } else if (function == '4') {
+    snake(); //Snake
+  } else if (function == '5') {
+    festivalLights(); //festival lights
+  } else if (function == '6') {
+    meteorRain(10, 64, true); // meteor rain from https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/
+  } else if (function == '7') {
+    sparkles(); //random sparkles with input color
+  } else if (function == '8') {
+    rainbow(); // rainbow changing colors from https://www.tweaking4all.com/ardware/arduino/adruino-led-strip-effects/
+  } else if (function == '9') {
+    rainbowSparkles(); // rainbow changing colors with sparkles
+  }
+}
+
+
+/// mariahs logic
+void mariahLogic(CRGB color1, CRGB color2) {
+
+  if (function == '1') {
+    coil(color1, color2, 100);
+  } else if (function == '2') {
+    checkerFlashD(color1, color2, 100);
+  } else if (function == '3') {
+    colorSwitch(color1, color2, 100);
+  } else if (function == '4') {
+    // mariahSnake(color1);
+  } else if (function == '5') {
+      mariahSparkles();
+  } else if (function == '6') {
+
+  } else if (function == '7') {
+
+  } else if (function == '8') {
+
+  } else if (function == '9') {
+
+  }
 }
