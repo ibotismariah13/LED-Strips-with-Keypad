@@ -57,8 +57,11 @@ void loop() {
   if (function == '1') {
     collegeLights();
 
-  } else  {
+  } else if (function== '0') {
     showProgramCleanUp(10);
+  }
+  else{
+    showTech(2500);
   }
 
 
@@ -183,6 +186,7 @@ void follow( CRGB color1, CRGB color2,  long delayTime) {
 void checkerFlashD( CRGB color1, CRGB color2,  long timeDelay) {
 
   double delayTime = timeDelay;
+  int t = 0;
   while (delayTime > 50) {
     for (int i = 0; i < NUM_LEDS; ++i) {
 
@@ -220,6 +224,7 @@ void checkerFlashD( CRGB color1, CRGB color2,  long timeDelay) {
 void boilerHookie(  long timeDelay) {
 
   double delayTime = timeDelay;
+  int t =0;
   while (delayTime > 500) {
     for (int i = 0; i < NUM_LEDS; ++i) {
 
@@ -252,7 +257,7 @@ void boilerHookie(  long timeDelay) {
     showProgramCleanUp(50);
     delayTime = delayTime * .75;
   }
-  while (delayTime < 1500) {
+ while ( t < 5) {
     for (int i = 0; i < NUM_LEDS; ++i) {
 
       if (ifOdd(i) == true) {
@@ -270,6 +275,38 @@ void boilerHookie(  long timeDelay) {
     showProgramCleanUp(50);
 
     for (int i = 0; i < NUM_LEDS; ++i) {
+
+ if (ifOdd(i) == true) {
+        leds[i] = Gold;
+      }
+      else if (ifOdd(i) == false) {
+        leds[i] = Black;
+      }
+    }
+   
+    FastLED.show();
+    delay(delayTime);
+    showProgramCleanUp(50);
+    t++;
+ }
+  while (delayTime < 1500) {
+    for (int i = 0; i < NUM_LEDS; ++i) {
+
+      if (ifOdd(i) == true) {
+      
+         leds[i] = Maroon;
+      }
+      else if (ifOdd(i) == false) {
+         leds[i] = Orange;
+      }
+
+    }
+      
+       FastLED.show();
+    delay(delayTime);
+    showProgramCleanUp(50);
+
+      for (int i = 0; i < NUM_LEDS; ++i) {
 
  if (ifOdd(i) == true) {
         leds[i] = Gold;
@@ -339,6 +376,6 @@ void collegeLights() {
   coil(Maroon, Orange, 50);
   showProgramCleanUp(50);
    showTech(2500);
-
+   function = '0';
 
 }
